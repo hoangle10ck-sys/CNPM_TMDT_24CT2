@@ -12,7 +12,7 @@
         @yield('title', 'TechStore - Cửa hàng công nghệ')
     </title>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['frontend/resources/css/app.css', 'frontend/resources/js/app.js'])
 </head>
 
 <body class="flex min-h-screen flex-col bg-gray-50 text-gray-900">

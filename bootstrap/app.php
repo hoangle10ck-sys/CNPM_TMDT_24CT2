@@ -5,10 +5,10 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
-return Application::configure(basePath: dirname(__DIR__))
+$app = Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        web: __DIR__.'/../routes/web.php',
-        commands: __DIR__.'/../routes/console.php',
+        web: dirname(__DIR__).'/backend/routes/web.php',
+        commands: dirname(__DIR__).'/backend/routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
@@ -20,3 +20,8 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->create();
+
+$app->useAppPath($app->basePath('backend/app'));
+$app->useDatabasePath($app->basePath('backend/database'));
+
+return $app;
