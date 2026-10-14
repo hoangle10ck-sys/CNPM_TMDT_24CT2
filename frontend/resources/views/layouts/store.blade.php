@@ -364,7 +364,7 @@
     </main>
 
     <footer class="mt-16 bg-[#0b1220] text-gray-300">
-        <div class="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-10 sm:px-6 md:grid-cols-3 lg:px-8">
+        <div class="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-10 sm:px-6 md:grid-cols-2 lg:px-8">
             <div>
                 <div class="flex items-center gap-3">
                     <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-lg text-white shadow-sm">🛒</span>
@@ -397,15 +397,6 @@
                 </div>
             </div>
 
-            <div>
-                <h3 class="font-semibold text-white">Liên hệ</h3>
-
-                <div class="mt-3 space-y-2 text-sm text-gray-400">
-                    <p>Email: support@techstore.vn</p>
-                    <p>Điện thoại: 0900 000 000</p>
-                    <p>Địa chỉ: Việt Nam</p>
-                </div>
-            </div>
         </div>
 
         <div class="border-t border-gray-800 py-4 text-center text-sm text-gray-400">

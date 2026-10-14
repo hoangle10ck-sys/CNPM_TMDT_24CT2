@@ -58,22 +58,6 @@
                 </a>
             </div>
         @else
-            <div class="mb-6 grid gap-4 md:grid-cols-3">
-                <div class="rounded-2xl bg-white p-4 shadow-sm">
-                    <p class="text-sm text-gray-500">Miễn phí vận chuyển</p>
-                    <p class="mt-1 font-semibold text-gray-900">Đơn từ 500.000₫</p>
-                </div>
-
-                <div class="rounded-2xl bg-white p-4 shadow-sm">
-                    <p class="text-sm text-gray-500">Đổi trả</p>
-                    <p class="mt-1 font-semibold text-gray-900">Trong 7 ngày</p>
-                </div>
-
-                <div class="rounded-2xl bg-white p-4 shadow-sm">
-                    <p class="text-sm text-gray-500">Hỗ trợ</p>
-                    <p class="mt-1 font-semibold text-gray-900">24/7 qua hotline</p>
-                </div>
-            </div>
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
                 <div class="space-y-4 lg:col-span-2">
                     @foreach ($cart->items as $item)

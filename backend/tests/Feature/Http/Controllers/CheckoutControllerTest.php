@@ -56,6 +56,33 @@ class CheckoutControllerTest extends TestCase
         ]);
     }
 
+    public function test_repeated_checkout_submission_does_not_create_a_duplicate_order(): void
+    {
+        $user = User::factory()->create();
+        $cartItem = $this->createCartItem($user, 5, 2);
+        $checkout = [
+            'customer_name' => 'Nguyen Van A',
+            'email' => 'customer@example.com',
+            'phone' => '0901234567',
+            'shipping_address' => '1 Nguyen Hue, Ho Chi Minh City',
+            'payment_method' => 'cod',
+        ];
+
+        $this->actingAs($user)
+            ->post(route('checkout.store'), $checkout)
+            ->assertRedirect();
+
+        $this->post(route('checkout.store'), $checkout)
+            ->assertSessionHasErrors('cart');
+
+        $this->assertDatabaseCount('orders', 1);
+        $this->assertDatabaseCount('order_items', 1);
+        $this->assertDatabaseHas('products', [
+            'id' => $cartItem->getAttribute('product_id'),
+            'stock' => 3,
+        ]);
+    }
+
     public function test_checkout_rejects_order_total_above_decimal_column_limit(): void
     {
         $user = User::factory()->create();

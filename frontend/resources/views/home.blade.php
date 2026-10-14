@@ -15,7 +15,7 @@
                 </h1>
 
                 <p class="mt-6 max-w-xl text-lg text-indigo-100">
-                    Khám phá laptop, điện thoại, tai nghe và phụ kiện với mức giá hợp lý, giao hàng nhanh và hỗ trợ tận tâm.
+                    Khám phá laptop, điện thoại, tai nghe và phụ kiện; tìm kiếm, lọc và đặt hàng trực tuyến.
                 </p>
 
                 <div class="mt-8 flex flex-wrap gap-4">
@@ -37,34 +37,6 @@
             </div>
         </div>
     </section>
-
-    <div class="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
-        <div class="grid gap-4 rounded-3xl bg-white p-4 shadow-sm ring-1 ring-gray-200 md:grid-cols-3">
-            <div class="flex items-center gap-3 rounded-2xl bg-indigo-50 p-4">
-                <span class="text-2xl">🚚</span>
-                <div>
-                    <p class="font-semibold text-gray-900">Giao hàng nhanh</p>
-                    <p class="text-sm text-gray-600">Trong 24–48h</p>
-                </div>
-            </div>
-
-            <div class="flex items-center gap-3 rounded-2xl bg-emerald-50 p-4">
-                <span class="text-2xl">🛡️</span>
-                <div>
-                    <p class="font-semibold text-gray-900">Bảo hành rõ ràng</p>
-                    <p class="text-sm text-gray-600">Uy tín và minh bạch</p>
-                </div>
-            </div>
-
-            <div class="flex items-center gap-3 rounded-2xl bg-amber-50 p-4">
-                <span class="text-2xl">💬</span>
-                <div>
-                    <p class="font-semibold text-gray-900">Hỗ trợ 24/7</p>
-                    <p class="text-sm text-gray-600">Tư vấn mọi lúc</p>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <section class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div class="mb-8">
@@ -108,26 +80,26 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="mb-8 text-center">
                 <p class="text-sm font-semibold uppercase tracking-[0.2em] text-indigo-600">Vì sao chọn chúng tôi</p>
-                <h2 class="mt-2 text-3xl font-bold text-gray-900">Mua sắm an tâm, tiện lợi và đáng tin cậy</h2>
+                    <h2 class="mt-2 text-3xl font-bold text-gray-900">Tìm và đặt sản phẩm thuận tiện</h2>
             </div>
 
             <div class="grid gap-6 md:grid-cols-3">
                 <div class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-gray-200">
                     <div class="text-3xl">🚚</div>
-                    <h3 class="mt-4 text-lg font-bold text-gray-900">Giao hàng nhanh</h3>
-                    <p class="mt-2 text-sm text-gray-600">Vận chuyển tiện lợi trên toàn quốc với thời gian xử lý nhanh.</p>
+                    <h3 class="mt-4 text-lg font-bold text-gray-900">Tìm kiếm sản phẩm</h3>
+                    <p class="mt-2 text-sm text-gray-600">Tìm theo tên, mô tả hoặc mã SKU và lọc theo danh mục, giá.</p>
                 </div>
 
                 <div class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-gray-200">
                     <div class="text-3xl">🔒</div>
-                    <h3 class="mt-4 text-lg font-bold text-gray-900">Thanh toán an toàn</h3>
-                    <p class="mt-2 text-sm text-gray-600">Hệ thống bảo mật, minh bạch và hỗ trợ thanh toán dễ dàng.</p>
+                    <h3 class="mt-4 text-lg font-bold text-gray-900">Thanh toán khi nhận hàng</h3>
+                    <p class="mt-2 text-sm text-gray-600">Hiện website hỗ trợ phương thức thanh toán COD.</p>
                 </div>
 
                 <div class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-gray-200">
                     <div class="text-3xl">💬</div>
-                    <h3 class="mt-4 text-lg font-bold text-gray-900">Hỗ trợ tận tâm</h3>
-                    <p class="mt-2 text-sm text-gray-600">Đội ngũ hỗ trợ sẵn sàng giải đáp mọi thắc mắc của khách hàng.</p>
+                    <h3 class="mt-4 text-lg font-bold text-gray-900">Theo dõi đơn hàng</h3>
+                    <p class="mt-2 text-sm text-gray-600">Xem trạng thái và lịch sử đơn hàng trong tài khoản của bạn.</p>
                 </div>
             </div>
         </div>

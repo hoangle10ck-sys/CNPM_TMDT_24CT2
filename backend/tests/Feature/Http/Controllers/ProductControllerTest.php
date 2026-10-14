@@ -16,7 +16,7 @@ class ProductControllerTest extends TestCase
 
     public function test_hidden_category_products_are_not_listed(): void
     {
-        Category::create([
+        $hiddenCategory = Category::create([
             'name' => 'Hidden Category',
             'slug' => 'hidden-category',
             'status' => false,
@@ -29,7 +29,7 @@ class ProductControllerTest extends TestCase
         ]);
 
         Product::create([
-            'category_id' => 1,
+            'category_id' => $hiddenCategory->getKey(),
             'name' => 'Hidden Product',
             'slug' => 'hidden-product',
             'sku' => 'HP-001',

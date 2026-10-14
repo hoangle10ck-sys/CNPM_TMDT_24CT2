@@ -340,18 +340,10 @@
 
                 <div class="mt-8 border-t pt-6">
                     <h2 class="font-semibold text-gray-900">
-                        Chính sách mua hàng
+                        Thanh toán
                     </h2>
 
                     <ul class="mt-3 space-y-2 text-sm text-gray-600">
-                        <li>
-                            ✓ Kiểm tra sản phẩm trước khi nhận hàng.
-                        </li>
-
-                        <li>
-                            ✓ Hỗ trợ đổi trả theo chính sách cửa hàng.
-                        </li>
-
                         <li>
                             ✓ Thanh toán khi nhận hàng.
                         </li>
