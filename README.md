@@ -7,6 +7,12 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## TechStore architecture
+
+TechStore is a Laravel MVC e-commerce application backed by a **MySQL database**. The database is a first-class runtime component: Laravel models use Eloquent to read and write persistent data in MySQL. In any architecture overview of this repository, show MySQL as a separate **Database / CSDL** component and connect the Eloquent models to it; do not omit the database layer or represent the models as the database itself.
+
+The core business tables are `users`, `categories`, `products`, `product_images`, `carts`, `cart_items`, `orders`, `order_items`, and `reviews`. Their schema and foreign-key relationships are defined by the Laravel migrations in [`backend/database/migrations`](backend/database/migrations). Key relationships include products belonging to categories, cart items belonging to carts and products, order items belonging to orders and products, and carts/orders/reviews associated with users.
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
