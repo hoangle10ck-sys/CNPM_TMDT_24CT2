@@ -44,7 +44,9 @@ class OrderController extends Controller
     {
         $order->load(['user', 'items.product']);
 
-        $allowedStatuses = $this->allowedStatuses($order->status);
+        $allowedStatuses = $this->allowedStatuses(
+            (string) $order->getAttribute('status')
+        );
 
         return view(
             'admin.orders.show',
@@ -59,15 +61,15 @@ class OrderController extends Controller
         $newStatus = $request->validated('status');
 
         $updated = DB::transaction(function () use ($order, $newStatus) {
-            $lockedOrder = Order::whereKey($order->id)
+            $lockedOrder = Order::whereKey($order->getKey())
                 ->lockForUpdate()
                 ->firstOrFail();
 
             $allowedStatuses = $this->allowedStatuses(
-                $lockedOrder->status
+                (string) $lockedOrder->getAttribute('status')
             );
 
-            if (!in_array($newStatus, $allowedStatuses, true)) {
+            if (! \in_array($newStatus, $allowedStatuses, true)) {
                 return false;
             }
 
@@ -96,7 +98,7 @@ class OrderController extends Controller
             return true;
         });
 
-        if (!$updated) {
+        if (! $updated) {
             return back()->with(
                 'error',
                 'Không thể chuyển sang trạng thái đã chọn.'

@@ -17,7 +17,7 @@ class ProductSeeder extends Seeder
 
         $products = [
             [
-                'category_id' => $laptop->id,
+                'category_id' => $laptop->getKey(),
                 'name' => 'Laptop ASUS Vivobook 15',
                 'slug' => 'laptop-asus-vivobook-15',
                 'sku' => 'LAP-ASUS-001',
@@ -30,7 +30,7 @@ class ProductSeeder extends Seeder
                 'status' => true,
             ],
             [
-                'category_id' => $laptop->id,
+                'category_id' => $laptop->getKey(),
                 'name' => 'Laptop Acer Aspire 5',
                 'slug' => 'laptop-acer-aspire-5',
                 'sku' => 'LAP-ACER-001',
@@ -43,7 +43,7 @@ class ProductSeeder extends Seeder
                 'status' => true,
             ],
             [
-                'category_id' => $phone->id,
+                'category_id' => $phone->getKey(),
                 'name' => 'Samsung Galaxy A55',
                 'slug' => 'samsung-galaxy-a55',
                 'sku' => 'PHONE-SS-001',
@@ -56,7 +56,7 @@ class ProductSeeder extends Seeder
                 'status' => true,
             ],
             [
-                'category_id' => $phone->id,
+                'category_id' => $phone->getKey(),
                 'name' => 'Xiaomi Redmi Note 13',
                 'slug' => 'xiaomi-redmi-note-13',
                 'sku' => 'PHONE-XM-001',
@@ -69,7 +69,7 @@ class ProductSeeder extends Seeder
                 'status' => true,
             ],
             [
-                'category_id' => $headphone->id,
+                'category_id' => $headphone->getKey(),
                 'name' => 'Tai nghe Bluetooth Sound Pro',
                 'slug' => 'tai-nghe-bluetooth-sound-pro',
                 'sku' => 'HEADPHONE-001',
@@ -82,7 +82,7 @@ class ProductSeeder extends Seeder
                 'status' => true,
             ],
             [
-                'category_id' => $headphone->id,
+                'category_id' => $headphone->getKey(),
                 'name' => 'Tai nghe Gaming G5',
                 'slug' => 'tai-nghe-gaming-g5',
                 'sku' => 'HEADPHONE-002',
@@ -95,7 +95,7 @@ class ProductSeeder extends Seeder
                 'status' => true,
             ],
             [
-                'category_id' => $accessory->id,
+                'category_id' => $accessory->getKey(),
                 'name' => 'Chuột không dây M220',
                 'slug' => 'chuot-khong-day-m220',
                 'sku' => 'ACCESSORY-001',
@@ -108,7 +108,7 @@ class ProductSeeder extends Seeder
                 'status' => true,
             ],
             [
-                'category_id' => $accessory->id,
+                'category_id' => $accessory->getKey(),
                 'name' => 'Bàn phím cơ K87',
                 'slug' => 'ban-phim-co-k87',
                 'sku' => 'ACCESSORY-002',

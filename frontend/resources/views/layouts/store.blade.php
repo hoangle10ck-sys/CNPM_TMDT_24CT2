@@ -18,19 +18,39 @@
 <body class="flex min-h-screen flex-col bg-gray-50 text-gray-900">
     <header
         x-data="{ mobileMenuOpen: false }"
-        class="sticky top-0 z-50 border-b border-gray-200
-               bg-white shadow-sm"
+        class="sticky top-0 z-50 border-b border-gray-200 bg-white/90 shadow-sm backdrop-blur-sm"
     >
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-20 items-center justify-between">
                 <a
                     href="{{ route('home') }}"
-                    class="shrink-0 text-2xl font-bold text-indigo-600"
+                    class="flex shrink-0 items-center gap-3"
                 >
-                    TechStore
+                    <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-lg text-white shadow-sm">🛒</span>
+                    <span class="text-2xl font-black tracking-tight text-indigo-700">TechStore</span>
                 </a>
 
-                <nav class="hidden items-center gap-6 lg:flex">
+                <form method="GET" action="{{ route('products.index') }}" class="hidden w-60 2xl:block">
+                    <label for="header-search" class="sr-only">Tìm sản phẩm</label>
+                    <div class="relative">
+                        <input
+                            id="header-search"
+                            name="keyword"
+                            type="search"
+                            value="{{ request('keyword') }}"
+                            placeholder="Tìm sản phẩm..."
+                            class="w-full rounded-full border-gray-200 bg-gray-50 py-2.5 pl-4 pr-11 text-sm focus:border-indigo-500 focus:bg-white focus:ring-indigo-500"
+                        >
+                        <button type="submit" aria-label="Tìm kiếm" class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-500 transition hover:text-indigo-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                                <circle cx="11" cy="11" r="7" stroke-width="1.8" />
+                                <path d="m20 20-4-4" stroke-linecap="round" stroke-width="1.8" />
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+
+                <nav class="hidden items-center gap-6 2xl:gap-4 lg:flex">
                     <a
                         href="{{ route('home') }}"
                         class="text-sm font-medium transition
@@ -207,6 +227,21 @@
                 class="border-t border-gray-200 py-4 lg:hidden"
             >
                 <nav class="flex flex-col gap-2">
+                    <form method="GET" action="{{ route('products.index') }}" class="mb-2 flex gap-2 px-1">
+                        <label for="mobile-search" class="sr-only">Tìm sản phẩm</label>
+                        <input
+                            id="mobile-search"
+                            name="keyword"
+                            type="search"
+                            value="{{ request('keyword') }}"
+                            placeholder="Tìm sản phẩm..."
+                            class="min-w-0 flex-1 rounded-xl border-gray-200 bg-gray-50 text-sm focus:border-indigo-500 focus:bg-white focus:ring-indigo-500"
+                        >
+                        <button type="submit" class="rounded-xl bg-indigo-600 px-4 text-sm font-semibold text-white transition hover:bg-indigo-700">
+                            Tìm
+                        </button>
+                    </form>
+
                     <a
                         href="{{ route('home') }}"
                         class="rounded-lg px-4 py-2 font-medium
@@ -328,87 +363,44 @@
         @yield('content')
     </main>
 
-    <footer class="mt-16 bg-gray-900 text-gray-300">
-        <div class="mx-auto grid max-w-7xl grid-cols-1 gap-8
-                    px-4 py-10 sm:px-6 md:grid-cols-3 lg:px-8">
+    <footer class="mt-16 bg-[#0b1220] text-gray-300">
+        <div class="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-10 sm:px-6 md:grid-cols-3 lg:px-8">
             <div>
-                <h3 class="text-xl font-bold text-white">
-                    TechStore
-                </h3>
+                <div class="flex items-center gap-3">
+                    <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-lg text-white shadow-sm">🛒</span>
+                    <h3 class="text-xl font-black tracking-tight text-white">TechStore</h3>
+                </div>
 
-                <p class="mt-3 text-sm leading-6">
-                    Website thương mại điện tử được xây dựng bằng
-                    Laravel theo mô hình MVC.
+                <p class="mt-4 text-sm leading-6 text-gray-400">
+                    Cửa hàng công nghệ chuyên cung cấp laptop, điện thoại, phụ kiện và giải pháp hiệu suất cao cho cuộc sống hiện đại.
                 </p>
             </div>
 
             <div>
-                <h3 class="font-semibold text-white">
-                    Liên kết
-                </h3>
+                <h3 class="font-semibold text-white">Liên kết</h3>
 
                 <div class="mt-3 space-y-2 text-sm">
-                    <a
-                        href="{{ route('home') }}"
-                        class="block hover:text-white"
-                    >
-                        Trang chủ
-                    </a>
+                    <a href="{{ route('home') }}" class="block hover:text-white">Trang chủ</a>
 
                     @auth
                         @if (auth()->user()->isAdmin())
-                            <a
-                                href="{{ route('admin.dashboard') }}"
-                                class="block hover:text-white"
-                            >
-                                Quản trị
-                            </a>
+                            <a href="{{ route('admin.dashboard') }}" class="block hover:text-white">Quản trị</a>
                         @else
-                            <a
-                                href="{{ route('products.index') }}"
-                                class="block hover:text-white"
-                            >
-                                Sản phẩm
-                            </a>
-
-                            <a
-                                href="{{ route('cart.index') }}"
-                                class="block hover:text-white"
-                            >
-                                Giỏ hàng
-                            </a>
-
-                            <a
-                                href="{{ route('orders.index') }}"
-                                class="block hover:text-white"
-                            >
-                                Đơn hàng của tôi
-                            </a>
+                            <a href="{{ route('products.index') }}" class="block hover:text-white">Sản phẩm</a>
+                            <a href="{{ route('cart.index') }}" class="block hover:text-white">Giỏ hàng</a>
+                            <a href="{{ route('orders.index') }}" class="block hover:text-white">Đơn hàng của tôi</a>
                         @endif
                     @else
-                        <a
-                            href="{{ route('products.index') }}"
-                            class="block hover:text-white"
-                        >
-                            Sản phẩm
-                        </a>
-
-                        <a
-                            href="{{ route('login') }}"
-                            class="block hover:text-white"
-                        >
-                            Đăng nhập
-                        </a>
+                        <a href="{{ route('products.index') }}" class="block hover:text-white">Sản phẩm</a>
+                        <a href="{{ route('login') }}" class="block hover:text-white">Đăng nhập</a>
                     @endauth
                 </div>
             </div>
 
             <div>
-                <h3 class="font-semibold text-white">
-                    Liên hệ
-                </h3>
+                <h3 class="font-semibold text-white">Liên hệ</h3>
 
-                <div class="mt-3 space-y-2 text-sm">
+                <div class="mt-3 space-y-2 text-sm text-gray-400">
                     <p>Email: support@techstore.vn</p>
                     <p>Điện thoại: 0900 000 000</p>
                     <p>Địa chỉ: Việt Nam</p>
@@ -416,7 +408,7 @@
             </div>
         </div>
 
-        <div class="border-t border-gray-800 py-4 text-center text-sm">
+        <div class="border-t border-gray-800 py-4 text-center text-sm text-gray-400">
             © {{ date('Y') }} TechStore. All rights reserved.
         </div>
     </footer>

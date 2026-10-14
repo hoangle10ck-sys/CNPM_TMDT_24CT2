@@ -32,36 +32,52 @@
 
         <div class="grid grid-cols-1 gap-10 rounded-2xl bg-white
                     p-6 shadow-sm lg:grid-cols-2 lg:p-10">
-            <div>
-                @if ($product->thumbnail)
-                    <img
-                        src="{{ asset('storage/'.$product->thumbnail) }}"
-                        alt="{{ $product->name }}"
-                        class="h-[450px] w-full rounded-xl object-contain"
-                    >
-                @else
-                    <div class="flex h-[450px] items-center justify-center
-                                rounded-xl bg-gray-100">
-                        <div class="text-center text-gray-400">
+            @php
+                $galleryImages = collect([$product->thumbnail])
+                    ->filter()
+                    ->concat($product->images->pluck('image_path'))
+                    ->unique()
+                    ->values()
+                    ->map(fn ($imagePath) => asset('storage/'.$imagePath))
+                    ->all();
+            @endphp
+
+            <div x-data="{ images: @js($galleryImages), activeImage: 0, imageFailed: false }">
+                <div class="flex h-80 items-center justify-center rounded-xl bg-gray-50 sm:h-[450px]">
+                    <template x-if="images.length > 0 && !imageFailed">
+                        <img
+                            :src="images[activeImage]"
+                            alt="{{ $product->name }}"
+                            class="h-full w-full rounded-xl object-contain"
+                            x-on:error="imageFailed = true"
+                        >
+                    </template>
+
+                    <template x-if="images.length === 0 || imageFailed">
+                        <div role="img" aria-label="{{ $product->name }} - ảnh không khả dụng" class="text-center text-gray-400">
                             <div class="text-8xl">🛍️</div>
-
-                            <p class="mt-4">
-                                Sản phẩm chưa có ảnh
-                            </p>
+                            <p class="mt-4">Ảnh sản phẩm chưa có hoặc không tải được</p>
                         </div>
-                    </div>
-                @endif
+                    </template>
+                </div>
 
-                @if ($product->images->isNotEmpty())
-                    <div class="mt-4 grid grid-cols-4 gap-3">
-                        @foreach ($product->images as $image)
-                            <img
-                                src="{{ asset(
-                                    'storage/'.$image->image_path
-                                ) }}"
-                                alt="{{ $product->name }}"
-                                class="h-24 w-full rounded-lg object-cover"
+                @if (count($galleryImages) > 1)
+                    <div class="mt-4 grid grid-cols-4 gap-3 sm:grid-cols-5">
+                        @foreach ($galleryImages as $index => $imageUrl)
+                            <button
+                                type="button"
+                                aria-label="Xem ảnh {{ $index + 1 }} của {{ $product->name }}"
+                                :aria-pressed="activeImage === {{ $index }}"
+                                :class="activeImage === {{ $index }} ? 'ring-indigo-500' : 'ring-gray-200'"
+                                class="aspect-square overflow-hidden rounded-lg bg-white ring-2 transition focus:outline-none focus:ring-indigo-600"
+                                @click="activeImage = {{ $index }}; imageFailed = false"
                             >
+                                <img
+                                    src="{{ $imageUrl }}"
+                                    alt="{{ $product->name }} - ảnh {{ $index + 1 }}"
+                                    class="h-full w-full object-cover"
+                                >
+                            </button>
                         @endforeach
                     </div>
                 @endif

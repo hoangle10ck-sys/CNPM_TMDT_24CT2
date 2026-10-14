@@ -43,11 +43,14 @@ class OrderController extends Controller
         );
 
         DB::transaction(function () use ($order) {
-            $lockedOrder = Order::whereKey($order->id)
+            $lockedOrder = Order::whereKey($order->getKey())
                 ->lockForUpdate()
                 ->firstOrFail();
 
-            if ($lockedOrder->status !== Order::STATUS_PENDING) {
+            if (
+                $lockedOrder->getAttribute('status')
+                !== Order::STATUS_PENDING
+            ) {
                 return;
             }
 
@@ -67,7 +70,7 @@ class OrderController extends Controller
 
         $order->refresh();
 
-        if ($order->status !== Order::STATUS_CANCELLED) {
+        if ($order->getAttribute('status') !== Order::STATUS_CANCELLED) {
             return back()->with(
                 'error',
                 'Chỉ có thể hủy đơn hàng đang chờ xác nhận.'

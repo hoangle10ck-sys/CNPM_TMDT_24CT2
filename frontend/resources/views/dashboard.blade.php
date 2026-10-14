@@ -19,87 +19,80 @@
     </section>
 
     <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <a
-                href="{{ route('orders.index') }}"
-                class="rounded-xl bg-white p-6 shadow-sm transition
-                       hover:-translate-y-1 hover:shadow-md"
-            >
+        <div class="mb-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <a href="{{ route('orders.index') }}" class="rounded-2xl border border-indigo-100 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm text-gray-500">
-                            Tổng đơn hàng
-                        </p>
-
-                        <p class="mt-2 text-3xl font-bold text-blue-600">
-                            {{ $statistics['total_orders'] }}
-                        </p>
+                        <p class="text-sm text-gray-500">Đơn hàng</p>
+                        <p class="mt-2 text-2xl font-bold text-indigo-600">{{ $statistics['total_orders'] }}</p>
                     </div>
-
-                    <span class="text-4xl">📦</span>
+                    <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-100 text-2xl">📦</span>
                 </div>
             </a>
 
-            <a
-                href="{{ route('orders.index') }}"
-                class="rounded-xl bg-white p-6 shadow-sm transition
-                       hover:-translate-y-1 hover:shadow-md"
-            >
+            <a href="{{ route('orders.index') }}" class="rounded-2xl border border-amber-100 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm text-gray-500">
-                            Đơn đang xử lý
-                        </p>
-
-                        <p class="mt-2 text-3xl font-bold text-orange-600">
-                            {{ $statistics['pending_orders'] }}
-                        </p>
+                        <p class="text-sm text-gray-500">Đang xử lý</p>
+                        <p class="mt-2 text-2xl font-bold text-amber-600">{{ $statistics['pending_orders'] }}</p>
                     </div>
-
-                    <span class="text-4xl">🚚</span>
+                    <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-100 text-2xl">🚚</span>
                 </div>
             </a>
 
-            <a
-                href="{{ route('cart.index') }}"
-                class="rounded-xl bg-white p-6 shadow-sm transition
-                       hover:-translate-y-1 hover:shadow-md"
-            >
+            <a href="{{ route('cart.index') }}" class="rounded-2xl border border-violet-100 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm text-gray-500">
-                            Trong giỏ hàng
-                        </p>
-
-                        <p class="mt-2 text-3xl font-bold text-purple-600">
-                            {{ $statistics['cart_items'] }}
-                        </p>
+                        <p class="text-sm text-gray-500">Trong giỏ</p>
+                        <p class="mt-2 text-2xl font-bold text-violet-600">{{ $statistics['cart_items'] }}</p>
                     </div>
-
-                    <span class="text-4xl">🛒</span>
+                    <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-violet-100 text-2xl">🛒</span>
                 </div>
             </a>
 
-            <div class="rounded-xl bg-white p-6 shadow-sm">
+            <div class="rounded-2xl border border-emerald-100 bg-white p-4 shadow-sm">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm text-gray-500">
-                            Tổng chi tiêu
-                        </p>
-
-                        <p class="mt-2 text-2xl font-bold text-green-600">
-                            {{ number_format(
-                                $statistics['total_spent'],
-                                0,
-                                ',',
-                                '.'
-                            ) }}₫
-                        </p>
+                        <p class="text-sm text-gray-500">Tổng chi tiêu</p>
+                        <p class="mt-2 text-xl font-bold text-emerald-600">{{ number_format($statistics['total_spent'], 0, ',', '.') }}₫</p>
                     </div>
-
-                    <span class="text-4xl">💰</span>
+                    <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 text-2xl">💰</span>
                 </div>
             </div>
+        </div>
+
+        <div class="mb-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <a href="{{ route('orders.index') }}" class="flex items-center justify-between rounded-2xl bg-indigo-600 p-4 text-white shadow-sm transition hover:bg-indigo-700">
+                <div>
+                    <p class="text-sm text-indigo-100">Đơn hàng</p>
+                    <p class="mt-1 font-semibold">Xem việc giao hàng</p>
+                </div>
+                <span class="text-2xl">→</span>
+            </a>
+
+            <a href="{{ route('cart.index') }}" class="flex items-center justify-between rounded-2xl bg-white p-4 text-gray-900 shadow-sm ring-1 ring-gray-200 transition hover:-translate-y-0.5">
+                <div>
+                    <p class="text-sm text-gray-500">Giỏ hàng</p>
+                    <p class="mt-1 font-semibold">Tiếp tục mua sắm</p>
+                </div>
+                <span class="text-2xl">🛍️</span>
+            </a>
+
+            <a href="{{ route('profile.edit') }}" class="flex items-center justify-between rounded-2xl bg-white p-4 text-gray-900 shadow-sm ring-1 ring-gray-200 transition hover:-translate-y-0.5">
+                <div>
+                    <p class="text-sm text-gray-500">Hồ sơ</p>
+                    <p class="mt-1 font-semibold">Cập nhật thông tin</p>
+                </div>
+                <span class="text-2xl">👤</span>
+            </a>
+
+            <a href="{{ route('products.index') }}" class="flex items-center justify-between rounded-2xl bg-white p-4 text-gray-900 shadow-sm ring-1 ring-gray-200 transition hover:-translate-y-0.5">
+                <div>
+                    <p class="text-sm text-gray-500">Sản phẩm</p>
+                    <p class="mt-1 font-semibold">Khám phá ngay</p>
+                </div>
+                <span class="text-2xl">✨</span>
+            </a>
         </div>
 
         <div class="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-3">

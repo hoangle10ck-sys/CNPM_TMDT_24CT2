@@ -37,7 +37,9 @@ class ProductController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        $categories = Category::orderBy('name')->get();
+        $categories = Category::where('status', true)
+            ->orderBy('name')
+            ->get();
 
         return view(
             'admin.products.index',
@@ -84,7 +86,9 @@ class ProductController extends Controller
 
     public function edit(Product $product): View
     {
-        $categories = Category::orderBy('name')->get();
+        $categories = Category::where('status', true)
+            ->orderBy('name')
+            ->get();
 
         return view(
             'admin.products.edit',
@@ -107,8 +111,10 @@ class ProductController extends Controller
         $data['is_featured'] = $request->boolean('is_featured');
 
         if ($request->hasFile('thumbnail')) {
-            if ($product->thumbnail) {
-                Storage::disk('public')->delete($product->thumbnail);
+            $thumbnail = $product->getAttribute('thumbnail');
+
+            if (\is_string($thumbnail) && $thumbnail !== '') {
+                Storage::disk('public')->delete($thumbnail);
             }
 
             $data['thumbnail'] = $request
@@ -127,8 +133,10 @@ class ProductController extends Controller
 
     public function destroy(Product $product): RedirectResponse
     {
-        if ($product->thumbnail) {
-            Storage::disk('public')->delete($product->thumbnail);
+        $thumbnail = $product->getAttribute('thumbnail');
+
+        if (\is_string($thumbnail) && $thumbnail !== '') {
+            Storage::disk('public')->delete($thumbnail);
         }
 
         $product->delete();

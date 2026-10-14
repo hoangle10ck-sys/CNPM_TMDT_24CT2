@@ -19,6 +19,9 @@ class HomeController extends Controller
 
         $featuredProducts = Product::with('category')
             ->where('status', true)
+            ->whereHas('category', function ($query) {
+                $query->where('status', true);
+            })
             ->where('is_featured', true)
             ->latest()
             ->take(8)
@@ -26,6 +29,9 @@ class HomeController extends Controller
 
         $latestProducts = Product::with('category')
             ->where('status', true)
+            ->whereHas('category', function ($query) {
+                $query->where('status', true);
+            })
             ->latest()
             ->take(8)
             ->get();

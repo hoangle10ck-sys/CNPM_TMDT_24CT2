@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreProductRequest extends FormRequest
 {
@@ -14,7 +16,11 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => ['required', 'exists:categories,id'],
+            'category_id' => [
+                'required',
+                Rule::exists(Category::class, 'id')
+                    ->where(fn ($query) => $query->where('status', true)),
+            ],
             'name' => ['required', 'string', 'max:255', 'unique:products,name'],
             'sku' => ['nullable', 'string', 'max:100', 'unique:products,sku'],
             'price' => ['required', 'numeric', 'min:0'],

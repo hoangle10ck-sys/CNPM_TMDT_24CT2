@@ -49,13 +49,15 @@ class CartController extends Controller
             ->where('status', true)
             ->find($validated['product_id']);
 
-        if (!$product) {
+        if (! $product) {
             return back()->withErrors([
                 'quantity' => 'Sản phẩm không tồn tại hoặc đã ngừng bán.',
             ]);
         }
 
-        if ($product->stock <= 0) {
+        $productStock = (int) $product->getAttribute('stock');
+
+        if ($productStock <= 0) {
             return back()->withErrors([
                 'quantity' => 'Sản phẩm hiện đã hết hàng.',
             ]);
@@ -67,18 +69,18 @@ class CartController extends Controller
 
         /** @var CartItem|null $cartItem */
         $cartItem = CartItem::query()
-            ->where('cart_id', $cart->id)
-            ->where('product_id', $product->id)
+            ->where('cart_id', $cart->getKey())
+            ->where('product_id', $product->getKey())
             ->first();
 
         $newQuantity = (int) $validated['quantity']
             + ($cartItem?->quantity ?? 0);
 
-        if ($newQuantity > $product->stock) {
+        if ($newQuantity > $productStock) {
             return back()
                 ->withInput()
                 ->withErrors([
-                    'quantity' => "Chỉ còn {$product->stock} sản phẩm trong kho.",
+                    'quantity' => "Chỉ còn {$productStock} sản phẩm trong kho.",
                 ]);
         }
 
@@ -88,8 +90,8 @@ class CartController extends Controller
             ]);
         } else {
             CartItem::create([
-                'cart_id' => $cart->id,
-                'product_id' => $product->id,
+                'cart_id' => $cart->getKey(),
+                'product_id' => $product->getKey(),
                 'quantity' => (int) $validated['quantity'],
             ]);
         }
@@ -111,24 +113,28 @@ class CartController extends Controller
             403
         );
 
-        if (!$cartItem->product || !$cartItem->product->status) {
+        $product = $cartItem->product;
+
+        if (! $product || ! (bool) $product->getAttribute('status')) {
             return back()->withErrors([
                 'quantity' => 'Sản phẩm không còn được bán.',
             ]);
         }
+
+        $productStock = (int) $product->getAttribute('stock');
 
         $validated = $request->validate([
             'quantity' => [
                 'required',
                 'integer',
                 'min:1',
-                'max:'.$cartItem->product->stock,
+                'max:'.$productStock,
             ],
         ], [
             'quantity.required' => 'Vui lòng nhập số lượng.',
             'quantity.integer' => 'Số lượng phải là số nguyên.',
             'quantity.min' => 'Số lượng tối thiểu là 1.',
-            'quantity.max' => "Chỉ còn {$cartItem->product->stock} sản phẩm trong kho.",
+            'quantity.max' => "Chỉ còn {$productStock} sản phẩm trong kho.",
         ]);
 
         $cartItem->update([
@@ -169,7 +175,7 @@ class CartController extends Controller
 
         if ($cart) {
             CartItem::query()
-                ->where('cart_id', $cart->id)
+                ->where('cart_id', $cart->getKey())
                 ->delete();
         }
 

@@ -3,9 +3,10 @@
 @section('title', 'Sản phẩm - TechStore')
 
 @section('content')
-    <section class="bg-gray-900 py-12 text-white">
+    <section class="bg-gradient-to-br from-slate-950 via-indigo-950 to-indigo-800 py-12 text-white sm:py-16">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold">Tất cả sản phẩm</h1>
+            <p class="text-sm font-semibold uppercase tracking-[0.22em] text-indigo-200">Khám phá TechStore</p>
+            <h1 class="mt-2 text-3xl font-black tracking-tight sm:text-4xl">Tất cả sản phẩm</h1>
 
             <p class="mt-2 text-gray-300">
                 Tìm sản phẩm phù hợp với nhu cầu của bạn.
@@ -17,32 +18,33 @@
         <form
             method="GET"
             action="{{ route('products.index') }}"
-            class="mb-10 grid grid-cols-1 gap-4 rounded-xl bg-white p-6
-                   shadow-sm md:grid-cols-5"
+            class="mb-10 grid grid-cols-1 gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:grid-cols-2 lg:grid-cols-5 lg:p-6"
         >
             <div class="md:col-span-2">
-                <label class="mb-1 block text-sm font-medium text-gray-700">
+                <label for="product-keyword" class="mb-1 block text-sm font-semibold text-gray-700">
                     Tìm kiếm
                 </label>
 
                 <input
+                    id="product-keyword"
                     name="keyword"
                     type="text"
                     value="{{ request('keyword') }}"
                     placeholder="Nhập tên hoặc mã sản phẩm"
-                    class="block w-full rounded-md border-gray-300
-                           focus:border-indigo-500 focus:ring-indigo-500"
+                    class="block w-full rounded-xl border-gray-300 bg-gray-50/70
+                           focus:border-indigo-500 focus:bg-white focus:ring-indigo-500"
                 >
             </div>
 
             <div>
-                <label class="mb-1 block text-sm font-medium text-gray-700">
+                <label for="product-category" class="mb-1 block text-sm font-semibold text-gray-700">
                     Danh mục
                 </label>
 
                 <select
+                    id="product-category"
                     name="category"
-                    class="block w-full rounded-md border-gray-300
+                    class="block w-full rounded-xl border-gray-300 bg-gray-50/70
                            focus:border-indigo-500 focus:ring-indigo-500"
                 >
                     <option value="">Tất cả danh mục</option>
@@ -59,13 +61,14 @@
             </div>
 
             <div>
-                <label class="mb-1 block text-sm font-medium text-gray-700">
+                <label for="product-sort" class="mb-1 block text-sm font-semibold text-gray-700">
                     Sắp xếp
                 </label>
 
                 <select
+                    id="product-sort"
                     name="sort"
-                    class="block w-full rounded-md border-gray-300
+                    class="block w-full rounded-xl border-gray-300 bg-gray-50/70
                            focus:border-indigo-500 focus:ring-indigo-500"
                 >
                     <option value="">Mới nhất</option>
@@ -83,21 +86,28 @@
                     >
                         Giá cao đến thấp
                     </option>
+
+                    <option
+                        value="best_selling"
+                        @selected(request('sort') === 'best_selling')
+                    >
+                        Bán chạy
+                    </option>
                 </select>
             </div>
 
             <div class="flex items-end gap-2">
                 <button
                     type="submit"
-                    class="rounded-md bg-indigo-600 px-4 py-2.5 text-white
-                           hover:bg-indigo-700"
+                    class="rounded-xl bg-indigo-600 px-4 py-2.5 font-semibold text-white shadow-sm
+                           transition hover:bg-indigo-700"
                 >
                     Tìm kiếm
                 </button>
 
                 <a
                     href="{{ route('products.index') }}"
-                    class="rounded-md bg-gray-200 px-4 py-2.5 text-gray-700
+                    class="rounded-xl bg-gray-100 px-4 py-2.5 font-medium text-gray-700
                            hover:bg-gray-300"
                 >
                     Xóa lọc
@@ -105,35 +115,37 @@
             </div>
 
             <div>
-                <label class="mb-1 block text-sm font-medium text-gray-700">
+                <label for="min-price" class="mb-1 block text-sm font-semibold text-gray-700">
                     Giá thấp nhất
                 </label>
 
                 <input
+                    id="min-price"
                     name="min_price"
                     type="number"
                     min="0"
                     step="1000"
                     value="{{ request('min_price') }}"
                     placeholder="0"
-                    class="block w-full rounded-md border-gray-300
+                    class="block w-full rounded-xl border-gray-300 bg-gray-50/70
                            focus:border-indigo-500 focus:ring-indigo-500"
                 >
             </div>
 
             <div>
-                <label class="mb-1 block text-sm font-medium text-gray-700">
+                <label for="max-price" class="mb-1 block text-sm font-semibold text-gray-700">
                     Giá cao nhất
                 </label>
 
                 <input
+                    id="max-price"
                     name="max_price"
                     type="number"
                     min="0"
                     step="1000"
                     value="{{ request('max_price') }}"
                     placeholder="20.000.000"
-                    class="block w-full rounded-md border-gray-300
+                    class="block w-full rounded-xl border-gray-300 bg-gray-50/70
                            focus:border-indigo-500 focus:ring-indigo-500"
                 >
             </div>
@@ -153,7 +165,7 @@
             @forelse ($products as $product)
                 <x-product-card :product="$product" />
             @empty
-                <div class="col-span-full rounded-xl bg-white p-12 text-center shadow-sm">
+                <div class="col-span-full rounded-2xl border border-gray-200 bg-white p-12 text-center shadow-sm">
                     <div class="text-6xl">🔍</div>
 
                     <h2 class="mt-4 text-xl font-semibold">

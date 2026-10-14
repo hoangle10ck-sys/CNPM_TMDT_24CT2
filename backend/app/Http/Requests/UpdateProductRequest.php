@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -17,7 +18,11 @@ class UpdateProductRequest extends FormRequest
         $product = $this->route('product');
 
         return [
-            'category_id' => ['required', 'exists:categories,id'],
+            'category_id' => [
+                'required',
+                Rule::exists(Category::class, 'id')
+                    ->where(fn ($query) => $query->where('status', true)),
+            ],
             'name' => [
                 'required',
                 'string',

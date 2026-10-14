@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property int $id
+ * @property string $role
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;

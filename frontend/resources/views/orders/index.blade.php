@@ -5,70 +5,44 @@
 @section('content')
     <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div class="mb-8">
-            <h1 class="text-3xl font-bold">Đơn hàng của tôi</h1>
-
-            <p class="mt-2 text-gray-600">
-                Theo dõi lịch sử và trạng thái đơn hàng.
-            </p>
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-indigo-600">Orders</p>
+            <h1 class="mt-2 text-3xl font-bold text-gray-900">Đơn hàng của tôi</h1>
+            <p class="mt-2 text-gray-600">Theo dõi lịch sử và trạng thái đơn hàng của bạn một cách rõ ràng.</p>
         </div>
 
         @if (session('success'))
-            <div class="mb-6 rounded-lg bg-green-100 p-4 text-green-700">
+            <div class="mb-6 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-700 shadow-sm">
                 {{ session('success') }}
             </div>
         @endif
 
         @if (session('error'))
-            <div class="mb-6 rounded-lg bg-red-100 p-4 text-red-700">
+            <div class="mb-6 rounded-2xl border border-red-200 bg-red-50 p-4 text-red-700 shadow-sm">
                 {{ session('error') }}
             </div>
         @endif
 
         @if ($orders->isEmpty())
-            <div class="rounded-2xl bg-white p-14 text-center shadow-sm">
+            <div class="rounded-3xl bg-white p-14 text-center shadow-sm ring-1 ring-gray-200">
                 <div class="text-7xl">📦</div>
-
-                <h2 class="mt-5 text-2xl font-semibold">
-                    Bạn chưa có đơn hàng
-                </h2>
-
-                <a
-                    href="{{ route('products.index') }}"
-                    class="mt-6 inline-block rounded-lg bg-indigo-600
-                           px-6 py-3 font-semibold text-white"
-                >
+                <h2 class="mt-5 text-2xl font-semibold text-gray-900">Bạn chưa có đơn hàng</h2>
+                <p class="mt-2 text-gray-500">Hãy bắt đầu mua sắm và để TechStore hỗ trợ bạn ngay.</p>
+                <a href="{{ route('products.index') }}" class="mt-6 inline-block rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white transition hover:bg-indigo-700">
                     Bắt đầu mua sắm
                 </a>
             </div>
         @else
-            <div class="overflow-hidden rounded-xl bg-white shadow-sm">
+            <div class="overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-gray-200">
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
-                                    Mã đơn
-                                </th>
-
-                                <th class="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
-                                    Ngày đặt
-                                </th>
-
-                                <th class="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
-                                    Sản phẩm
-                                </th>
-
-                                <th class="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
-                                    Tổng tiền
-                                </th>
-
-                                <th class="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
-                                    Trạng thái
-                                </th>
-
-                                <th class="px-6 py-3 text-right text-xs font-medium uppercase text-gray-500">
-                                    Thao tác
-                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Mã đơn</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Ngày đặt</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Sản phẩm</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Tổng tiền</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Trạng thái</th>
+                                <th class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">Thao tác</th>
                             </tr>
                         </thead>
 
@@ -76,75 +50,25 @@
                             @foreach ($orders as $order)
                                 @php
                                     $status = match ($order->status) {
-                                        'pending' => [
-                                            'Chờ xác nhận',
-                                            'bg-yellow-100 text-yellow-700'
-                                        ],
-                                        'confirmed' => [
-                                            'Đã xác nhận',
-                                            'bg-blue-100 text-blue-700'
-                                        ],
-                                        'shipping' => [
-                                            'Đang giao',
-                                            'bg-purple-100 text-purple-700'
-                                        ],
-                                        'completed' => [
-                                            'Hoàn thành',
-                                            'bg-green-100 text-green-700'
-                                        ],
-                                        'cancelled' => [
-                                            'Đã hủy',
-                                            'bg-red-100 text-red-700'
-                                        ],
-                                        default => [
-                                            $order->status,
-                                            'bg-gray-100 text-gray-700'
-                                        ],
+                                        'pending' => ['Chờ xác nhận', 'bg-yellow-100 text-yellow-700'],
+                                        'confirmed' => ['Đã xác nhận', 'bg-blue-100 text-blue-700'],
+                                        'shipping' => ['Đang giao', 'bg-purple-100 text-purple-700'],
+                                        'completed' => ['Hoàn thành', 'bg-green-100 text-green-700'],
+                                        'cancelled' => ['Đã hủy', 'bg-red-100 text-red-700'],
+                                        default => [$order->status, 'bg-gray-100 text-gray-700'],
                                     };
                                 @endphp
 
-                                <tr>
-                                    <td class="px-6 py-4 font-medium">
-                                        {{ $order->order_code }}
-                                    </td>
-
-                                    <td class="px-6 py-4 text-gray-600">
-                                        {{ $order->created_at->format(
-                                            'd/m/Y H:i'
-                                        ) }}
-                                    </td>
-
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 font-semibold text-gray-900">{{ $order->order_code }}</td>
+                                    <td class="px-6 py-4 text-gray-600">{{ $order->created_at->format('d/m/Y H:i') }}</td>
+                                    <td class="px-6 py-4 text-gray-700">{{ $order->items_count }}</td>
+                                    <td class="px-6 py-4 font-semibold text-red-600">{{ number_format($order->total, 0, ',', '.') }}₫</td>
                                     <td class="px-6 py-4">
-                                        {{ $order->items_count }}
+                                        <span class="rounded-full px-3 py-1 text-xs font-medium {{ $status[1] }}">{{ $status[0] }}</span>
                                     </td>
-
-                                    <td class="px-6 py-4 font-semibold text-red-600">
-                                        {{ number_format(
-                                            $order->total,
-                                            0,
-                                            ',',
-                                            '.'
-                                        ) }}₫
-                                    </td>
-
-                                    <td class="px-6 py-4">
-                                        <span class="rounded-full px-3 py-1
-                                                     text-xs font-medium
-                                                     {{ $status[1] }}">
-                                            {{ $status[0] }}
-                                        </span>
-                                    </td>
-
                                     <td class="px-6 py-4 text-right">
-                                        <a
-                                            href="{{ route(
-                                                'orders.show',
-                                                $order
-                                            ) }}"
-                                            class="font-medium text-indigo-600"
-                                        >
-                                            Chi tiết
-                                        </a>
+                                        <a href="{{ route('orders.show', $order) }}" class="font-medium text-indigo-600 hover:text-indigo-800">Chi tiết</a>
                                     </td>
                                 </tr>
                             @endforeach

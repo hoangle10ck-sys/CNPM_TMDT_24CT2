@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -13,6 +14,9 @@ class ProductController extends Controller
     {
         $products = Product::with('category')
             ->where('status', true)
+            ->whereHas('category', function ($query) {
+                $query->where('status', true);
+            })
 
             ->when($request->filled('keyword'), function ($query) use ($request) {
                 $keyword = $request->string('keyword')->trim()->toString();
@@ -36,14 +40,14 @@ class ProductController extends Controller
 
             ->when($request->filled('min_price'), function ($query) use ($request) {
                 $query->whereRaw(
-                    'COALESCE(sale_price, price) >= ?',
+                    'COALESCE(sale_price, price) >= CAST(? AS DECIMAL(15, 2))',
                     [$request->input('min_price')]
                 );
             })
 
             ->when($request->filled('max_price'), function ($query) use ($request) {
                 $query->whereRaw(
-                    'COALESCE(sale_price, price) <= ?',
+                    'COALESCE(sale_price, price) <= CAST(? AS DECIMAL(15, 2))',
                     [$request->input('max_price')]
                 );
             })
@@ -52,19 +56,35 @@ class ProductController extends Controller
                 $request->input('sort') === 'price_asc',
                 fn ($query) => $query->orderByRaw(
                     'COALESCE(sale_price, price) ASC'
-                )
+                )->orderByDesc('id')
             )
 
             ->when(
                 $request->input('sort') === 'price_desc',
                 fn ($query) => $query->orderByRaw(
                     'COALESCE(sale_price, price) DESC'
-                )
+                )->orderByDesc('id')
             )
 
+            ->when($request->input('sort') === 'best_selling', function ($query) {
+                $query->withSum([
+                    'orderItems as sold_quantity' => function ($orderItemsQuery) {
+                        $orderItemsQuery->whereHas('order', function ($orderQuery) {
+                            $orderQuery->where('status', Order::STATUS_COMPLETED);
+                        });
+                    },
+                ], 'quantity')
+                    ->orderByDesc('sold_quantity')
+                    ->orderByDesc('id');
+            })
+
             ->when(
-                !in_array($request->input('sort'), ['price_asc', 'price_desc']),
-                fn ($query) => $query->latest()
+                ! \in_array(
+                    $request->input('sort'),
+                    ['price_asc', 'price_desc', 'best_selling'],
+                    true
+                ),
+                fn ($query) => $query->latest()->orderByDesc('id')
             )
 
             ->paginate(12)
@@ -82,10 +102,18 @@ class ProductController extends Controller
 
     public function show(Product $product): View
     {
-        abort_unless($product->status, 404);
+        abort_unless((bool) $product->getAttribute('status'), 404);
+
+        $product->load(['category' => function ($query) {
+            $query->where('status', true);
+        }]);
+
+        abort_unless(
+            $product->category && (bool) $product->category->getAttribute('status'),
+            404
+        );
 
         $product->load([
-            'category',
             'images',
             'reviews' => function ($query) {
                 $query->where('status', true)
@@ -94,10 +122,16 @@ class ProductController extends Controller
             },
         ]);
 
+        $categoryId = (int) $product->getAttribute('category_id');
+
         $relatedProducts = Product::with('category')
             ->where('status', true)
-            ->where('category_id', $product->category_id)
-            ->where('id', '!=', $product->id)
+            ->whereHas('category', function ($query) {
+                $query->where('status', true);
+            })
+            ->where('category_id', $categoryId)
+            ->where('stock', '>', 0)
+            ->where('id', '!=', $product->getKey())
             ->latest()
             ->take(4)
             ->get();
